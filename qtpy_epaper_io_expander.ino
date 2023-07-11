@@ -1,3 +1,7 @@
+#include "ER-EPM027-1B.h"
+#include "imagedata.h"
+#include "epdpaint.h"
+
 // blink the system LED on and off forever to signal failure state.
 void errorBlinkForever() {
   pinMode(LED_BUILTIN, OUTPUT);
@@ -10,6 +14,8 @@ void errorBlinkForever() {
 }
 
 // Demonstration test of using the display's SRAM from buydisplay / EastRising demo
+#define COLORED     0
+#define UNCOLORED   1
 void epdSramTest(Epd epd) {
   /**
     * Due to RAM not enough in Arduino UNO, a frame buffer is not allowed.
@@ -60,7 +66,7 @@ void setup() {
   }
   epd.ClearFrame();
 
-  epdSramTest();
+  epdSramTest(epd);
   delay(2000);
   epd.DisplayFrame(IMAGE_DATA);
   delay(2000);
