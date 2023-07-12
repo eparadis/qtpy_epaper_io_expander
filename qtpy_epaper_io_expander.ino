@@ -2,13 +2,16 @@
 #include "imagedata.h"
 #include "epdpaint.h"
 
+#define ERROR_LED A0
+#define STATUS_LED A1
+
 // blink the system LED on and off forever to signal failure state.
 void errorBlinkForever() {
-  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(ERROR_LED, OUTPUT);
   while(1) {
-    digitalWrite(LED_BUILTIN, HIGH);
+    digitalWrite(ERROR_LED, HIGH);
     delay(200);
-    digitalWrite(LED_BUILTIN, LOW);
+    digitalWrite(ERROR_LED, LOW);
     delay(200);
   }
 }
@@ -60,23 +63,36 @@ void epdSramTest(Epd epd) {
 }
 
 void setup() {
+  pinMode(STATUS_LED, OUTPUT);
+  digitalWrite(STATUS_LED, HIGH);
+
   Epd epd;
   if (epd.Init() != 0) {
     errorBlinkForever();
   }
-  epd.ClearFrame();
+  Wire.setClock(400000);
+  digitalWrite(STATUS_LED, LOW);
+  //epd.ClearFrame();    // really "clear SRAM"
+  epd.DisplayFrame();  // display SRAM onto screen
 
+  digitalWrite(STATUS_LED, HIGH);
   epdSramTest(epd);
   delay(2000);
-  epd.DisplayFrame(IMAGE_DATA);
-  delay(2000);
-  epd.DisplayFrame(IMAGE_DATA1);
-  delay(15000);
-  epd.ClearFrame();   // clears the SRAM
-  epd.DisplayFrame(); // displays the now-empty SRAM
+  // digitalWrite(STATUS_LED, HIGH);
+  // epd.DisplayFrame(IMAGE_DATA);
+  // delay(2000);
+  //epd.DisplayFrame(IMAGE_DATA1);
+  //delay(15000);
+  digitalWrite(STATUS_LED, LOW);
+  // epd.ClearFrame();   // clears the SRAM
+  // digitalWrite(STATUS_LED, HIGH);
+  // epd.DisplayFrame(); // displays the now-empty SRAM
   epd.Sleep();        // "deep sleep"
 }
 
 void loop() {
-  // nop
+  digitalWrite(STATUS_LED, LOW);
+  delay(1000);
+  digitalWrite(STATUS_LED, HIGH);
+  delay(1000);
 }
