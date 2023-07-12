@@ -72,21 +72,21 @@ void setup() {
   }
   Wire.setClock(400000);
   digitalWrite(STATUS_LED, LOW);
-  //epd.ClearFrame();    // really "clear SRAM"
+  epd.ClearFrame();    // really "clear SRAM"
   epd.DisplayFrame();  // display SRAM onto screen
 
   digitalWrite(STATUS_LED, HIGH);
   epdSramTest(epd);
   delay(2000);
-  // digitalWrite(STATUS_LED, HIGH);
-  // epd.DisplayFrame(IMAGE_DATA);
-  // delay(2000);
-  //epd.DisplayFrame(IMAGE_DATA1);
-  //delay(15000);
+  digitalWrite(STATUS_LED, HIGH);
+  epd.DisplayFrame(IMAGE_DATA);
+  delay(2000);
+  epd.DisplayFrame(IMAGE_DATA1);
+  delay(15000);
   digitalWrite(STATUS_LED, LOW);
-  // epd.ClearFrame();   // clears the SRAM
-  // digitalWrite(STATUS_LED, HIGH);
-  // epd.DisplayFrame(); // displays the now-empty SRAM
+  epd.ClearFrame();   // clears the SRAM
+  digitalWrite(STATUS_LED, HIGH);
+  epd.DisplayFrame(); // displays the now-empty SRAM
   epd.Sleep();        // "deep sleep"
 }
 

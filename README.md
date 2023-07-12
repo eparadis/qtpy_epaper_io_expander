@@ -14,4 +14,4 @@ The "Arduino example" provided by EastRising is well factored so that the hardwa
 
 This implementation makes use of that physical interface abstraction to use IO pins on the IO expander. Unfortunately SPI is bit-banged over the expander, making for some pretty slow updates. The trade-off is that only two pins for standard I2C are required, allowing very pin-restricted devices like the [ESP8211 ESP01 modules](https://www.sparkfun.com/products/17146) to use the ePaper display.
 
-
+A rough measurement shows it takes about 70 seconds to transfer a full image to the display. Sending a static value (as when you clear the display) is faster. Only updating specific regions of the SRAM is obviously the fastest.
