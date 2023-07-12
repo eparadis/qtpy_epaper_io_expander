@@ -15,12 +15,14 @@ Web: http://www.buydisplay.com
 // Pin definitions. These are on the MCP23017
 // 0..7  = PA0..7
 // 8..15 = PB0..7
-#define RST_PIN         0
+#define RST_PIN         2
 #define DC_PIN          1
-#define CS_PIN          2
-#define SPI_DATA        3
-#define SPI_CLK         4
-#define BUSY_PIN        5     // the only input!
+#define CS_PIN          0
+#define BUSY_PIN        3
+#define SPI_DATA        4
+#define SPI_CLK         5
+
+#define MCP_DEBUG_LED   7
 
 class EpdIf {
 public:
