@@ -19,10 +19,14 @@ Web: http://www.buydisplay.com
 #define DC_PIN          1
 #define CS_PIN          0
 #define BUSY_PIN        3
-#define SPI_DATA        4
-#define SPI_CLK         5
-
+// 4..6 currently unused
 #define MCP_DEBUG_LED   7
+
+// Pin definitions. These are on the device itself
+#define SPI_DATA        2
+#define SPI_CLK         3
+
+
 
 class EpdIf {
 public:

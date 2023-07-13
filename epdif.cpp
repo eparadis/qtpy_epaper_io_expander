@@ -34,12 +34,12 @@ void EpdIf::SpiTransfer(unsigned char data) {
   // shift out a byte
   for(int i = 0; i < 8; i += 1) {
     // set data
-    mcp.digitalWrite(SPI_DATA, data & 0x80);
+    digitalWrite(SPI_DATA, data & 0x80);
     data = data << 1;
     // clock high then low
-    mcp.digitalWrite(SPI_CLK, HIGH);
-    // possible delay here, but things are probably so slow coming out of the IO expander we don't need it
-    mcp.digitalWrite(SPI_CLK, LOW);
+    digitalWrite(SPI_CLK, HIGH);
+    // no delay. the display is plenty fast
+    digitalWrite(SPI_CLK, LOW);
   }
   mcp.digitalWrite(CS_PIN, HIGH);
   mcp.digitalWrite(MCP_DEBUG_LED, LOW);
@@ -49,14 +49,18 @@ int EpdIf::IfInit(void) {
   if (!mcp.begin_I2C()) {
     return -1; // could not init I2C comms to IO expander
   }
+  // slow IO is on the IO expander
   mcp.pinMode(CS_PIN, OUTPUT);
   mcp.pinMode(RST_PIN, OUTPUT);
   mcp.pinMode(DC_PIN, OUTPUT);
   mcp.pinMode(BUSY_PIN, INPUT);
-  mcp.pinMode(SPI_DATA, OUTPUT);
-  mcp.pinMode(SPI_CLK, OUTPUT);
-
   mcp.pinMode(MCP_DEBUG_LED, OUTPUT);
+
+  // fast IO is on the device
+  pinMode(SPI_DATA, OUTPUT);
+  pinMode(SPI_CLK, OUTPUT);
+
+  
   return 0;
 }
 
